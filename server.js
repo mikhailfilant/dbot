@@ -442,7 +442,7 @@ if (!DISCORD_TOKEN || !CLIENT_ID || !GUILD_ID) {
       message.member.permissions.has(PermissionFlagsBits.Administrator)
     ) {
       const row = new ActionRowBuilder().addComponents(
-        new ButtonBuilder().setCustomId('open_ticket').setLabel('🩸 Open Ticket').setStyle(ButtonStyle.Danger),
+        new ButtonBuilder().setCustomId('open_ticket').setLabel('Open Ticket').setStyle(ButtonStyle.Primary),
       );
 
       await message.channel.send({
