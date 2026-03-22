@@ -1,0 +1,23 @@
+{
+  "name": "discord-bot-key-server",
+  "version": "1.0.1",
+  "description": "Discord bot + key server, cleaned for Railway",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "keywords": [
+    "discord",
+    "railway",
+    "bot"
+  ],
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.3.1"
+  }
+}
