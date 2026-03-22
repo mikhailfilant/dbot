@@ -1,219 +1,109 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZZZS Admin Panel</title>
+  <title>dbot Admin</title>
   <style>
-    :root {
-      --bg: #0b1020;
-      --panel: #121933;
-      --panel-2: #0f152b;
-      --border: #273056;
-      --text: #eef2ff;
-      --muted: #9aa4d1;
-      --accent: #7c3aed;
-      --accent-2: #22c55e;
-      --danger: #ef4444;
-      --warn: #f59e0b;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, Arial, sans-serif;
-      background: linear-gradient(180deg, #090d1a, #0b1020);
-      color: var(--text);
-    }
-    .wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-    h1 { margin: 0 0 8px; font-size: 32px; }
-    p { color: var(--muted); }
-    .grid {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: 1fr;
-    }
-    @media (min-width: 980px) {
-      .grid { grid-template-columns: 340px 1fr; }
-    }
-    .card {
-      background: rgba(18, 25, 51, 0.95);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.25);
-    }
-    .row { display: flex; gap: 10px; align-items: center; }
-    .row.wrap { flex-wrap: wrap; padding: 0; }
-    label {
-      display: block;
-      font-size: 13px;
-      color: var(--muted);
-      margin: 12px 0 6px;
-    }
-    input, textarea {
-      width: 100%;
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 12px;
-      padding: 12px 14px;
-      outline: none;
-    }
-    textarea { min-height: 130px; resize: vertical; }
-    button {
-      border: 0;
-      border-radius: 12px;
-      padding: 11px 14px;
-      font-weight: 700;
-      cursor: pointer;
-      color: white;
-      background: var(--accent);
-    }
-    button.secondary { background: #334155; }
-    button.green { background: var(--accent-2); }
-    button.red { background: var(--danger); }
-    button.orange { background: var(--warn); }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 6px 10px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 14px 0;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    th, td {
-      text-align: left;
-      padding: 12px 10px;
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-    }
-    th { color: var(--muted); font-weight: 600; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-    .muted { color: var(--muted); }
-    .ok { color: #4ade80; }
-    .bad { color: #f87171; }
-    .search {
-      max-width: 300px;
-      margin-left: auto;
-    }
-    .status {
-      margin-top: 12px;
-      font-size: 14px;
-      color: var(--muted);
-      min-height: 20px;
-    }
-    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .topline {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-    }
-    .stats { display: flex; gap: 10px; flex-wrap: wrap; }
-    .small { font-size: 12px; }
-    .danger-note {
-      background: rgba(239, 68, 68, .08);
-      border: 1px solid rgba(239, 68, 68, .35);
-      color: #fca5a5;
-      border-radius: 12px;
-      padding: 12px 14px;
-      margin-top: 10px;
-    }
+    :root{--bg:#050816;--panel:#0b1430;--panel2:#0f1b42;--line:#28407a;--text:#e8eeff;--muted:#9db2e6;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;--blue:#60a5fa;--chip:#14275b}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#040612 0%,#07102a 100%);color:var(--text)}
+    .wrap{max-width:1400px;margin:0 auto;padding:24px} h1,h2,h3{margin:0 0 12px} h1{font-size:32px} h2{font-size:22px}
+    .top{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:20px} .sub{color:var(--muted);margin-top:8px}
+    .grid{display:grid;grid-template-columns:380px 1fr;gap:20px} @media (max-width:1100px){.grid{grid-template-columns:1fr}}
+    .card{background:rgba(11,20,48,.95);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .stack>*+*{margin-top:14px} label{display:block;font-size:14px;color:var(--muted);margin-bottom:6px}
+    input,textarea,select{width:100%;background:#07102a;color:var(--text);border:1px solid #35539e;border-radius:12px;padding:12px 14px;outline:none;font-size:15px}
+    textarea{min-height:120px;resize:vertical} input::placeholder,textarea::placeholder{color:#6f86bc}
+    .row{display:flex;gap:10px}.row>*{flex:1}
+    .btn{border:0;border-radius:12px;padding:12px 14px;font-weight:700;cursor:pointer;color:white;transition:.15s transform ease,.15s opacity ease}.btn:hover{transform:translateY(-1px)} .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .btn-green{background:var(--green)} .btn-red{background:var(--red)} .btn-yellow{background:var(--yellow);color:#1b1302} .btn-blue{background:var(--blue);color:#09111f}
+    .btn-ghost{background:#12214d;color:var(--text);border:1px solid #35539e}
+    .tiny{padding:8px 10px;border-radius:10px;font-size:13px}
+    .divider{height:1px;background:var(--line);margin:18px 0}
+    .notice{padding:12px 14px;border-radius:12px;font-size:14px;line-height:1.45}
+    .notice-red{border:1px solid rgba(239,68,68,.5);background:rgba(239,68,68,.08);color:#ffb4b4}
+    .status{font-size:14px;min-height:20px}.ok{color:#7ef0a4}.bad{color:#ff9b9b}.muted{color:var(--muted)}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}.toolbar .search{flex:1;min-width:260px}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}.chip{background:var(--chip);border:1px solid #35539e;color:var(--text);padding:7px 10px;border-radius:999px;font-size:13px;cursor:pointer}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px} table{width:100%;border-collapse:collapse;min-width:980px;background:rgba(6,11,28,.55)}
+    th,td{text-align:left;padding:12px;border-bottom:1px solid rgba(40,64,122,.65);font-size:14px;vertical-align:top}
+    th{position:sticky;top:0;background:#0f1b42;z-index:1;color:#d6e2ff;white-space:nowrap} tr:hover td{background:rgba(255,255,255,.02)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-word}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+    .badge-green{background:rgba(34,197,94,.12);color:#7ef0a4;border:1px solid rgba(34,197,94,.35)} .badge-red{background:rgba(239,68,68,.12);color:#ffb4b4;border:1px solid rgba(239,68,68,.35)} .badge-blue{background:rgba(96,165,250,.12);color:#afd4ff;border:1px solid rgba(96,165,250,.35)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}.small{font-size:12px}.count{font-size:13px;color:var(--muted)} a{color:#9cc5ff}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="topline">
+    <div class="top">
       <div>
-        <h1>ZZZS Admin Panel</h1>
-        <p>Manage keys without ReqBin. Paste your admin token, then load keys.</p>
+        <h1>dbot admin</h1>
+        <div class="sub">Manage keys from your Railway backend.</div>
       </div>
-      <div class="stats" id="stats"></div>
+      <div class="card" style="min-width:330px;max-width:420px">
+        <div class="stack">
+          <div>
+            <label for="adminToken">Admin token</label>
+            <div class="row">
+              <input id="adminToken" type="password" placeholder="Paste ADMIN_TOKEN" />
+              <button class="btn btn-blue" id="saveTokenBtn">Save</button>
+            </div>
+            <div class="small muted" style="margin-top:8px">Stored only in your browser localStorage for this page.</div>
+          </div>
+          <div class="notice notice-red">Rotate your Discord bot token and admin token if they were ever uploaded or pasted anywhere public.</div>
+          <div id="globalStatus" class="status muted">Ready.</div>
+        </div>
+      </div>
     </div>
 
     <div class="grid">
       <div class="card">
-        <div class="pill">Admin token stays in your browser only</div>
-        <label>Admin token</label>
-        <input id="token" type="password" placeholder="Paste ADMIN_TOKEN" />
-
-        <div class="row wrap" style="margin-top:12px">
-          <button id="saveToken">Save token</button>
-          <button class="secondary" id="loadKeysBtn">Load keys</button>
+        <h2>Generate one key</h2>
+        <div class="stack">
+          <div><label for="oneKey">Key (leave blank to auto-generate)</label><input id="oneKey" placeholder="ZZZ-XXXX-XXXX-XXXX" /></div>
+          <div><label for="oneDiscord">Discord name / buyer tag</label><input id="oneDiscord" placeholder="username#0000 or buyer name" /></div>
+          <div><label for="oneDiscordId">Discord ID</label><input id="oneDiscordId" placeholder="123456789012345678" /></div>
+          <div><label for="oneNote">Note</label><input id="oneNote" placeholder="campaign / buyer note" /></div>
+          <button class="btn btn-green" id="addOneBtn">Add key</button>
+          <div id="addOneStatus" class="status muted"></div>
         </div>
 
-        <div class="danger-note small">
-          Rotate your Discord bot token and admin token if they were ever uploaded or pasted somewhere public.
+        <div class="divider"></div>
+
+        <h2>Bulk add keys</h2>
+        <div class="stack">
+          <div><label for="bulkKeys">One key per line</label><textarea id="bulkKeys" placeholder="ZZZ-AAAA-BBBB-CCCC&#10;ZZZ-DDDD-EEEE-FFFF"></textarea></div>
+          <div><label for="bulkNote">Shared note</label><input id="bulkNote" placeholder="campaign / buyer note" /></div>
+          <button class="btn btn-yellow" id="bulkBtn">Bulk add</button>
+          <div id="bulkStatus" class="status muted"></div>
         </div>
-
-        <hr style="border-color: var(--border); border-style: solid; margin:18px 0">
-
-        <h3 style="margin:0 0 6px">Generate one key</h3>
-        <label>Key (leave blank to auto-generate)</label>
-        <input id="singleKey" placeholder="ZZZ-XXXX-XXXX-XXXX" />
-        <label>Discord name / buyer tag</label>
-        <input id="singleDiscord" placeholder="toprakvail" />
-        <label>Discord ID</label>
-        <input id="singleDiscordId" placeholder="1234567890" />
-        <label>Note</label>
-        <input id="singleNote" placeholder="buyer note" />
-        <div class="row wrap" style="margin-top:12px">
-          <button class="green" id="addKeyBtn">Add key</button>
-        </div>
-
-        <hr style="border-color: var(--border); border-style: solid; margin:18px 0">
-
-        <h3 style="margin:0 0 6px">Bulk add keys</h3>
-        <label>One key per line</label>
-        <textarea id="bulkKeys" placeholder="ZZZ-AAAA-BBBB-CCCC&#10;ZZZ-DDDD-EEEE-FFFF"></textarea>
-        <label>Shared note</label>
-        <input id="bulkNote" placeholder="campaign / buyer note" />
-        <div class="row wrap" style="margin-top:12px">
-          <button class="orange" id="bulkAddBtn">Bulk add</button>
-        </div>
-
-        <div class="status" id="status"></div>
       </div>
 
       <div class="card">
         <div class="toolbar">
-          <button class="secondary" id="refreshBtn">Refresh</button>
-          <button class="secondary" id="exportBtn">Export JSON</button>
-          <input class="search" id="search" placeholder="Search key / discord / note / hwid" />
+          <input class="search" id="searchInput" placeholder="Search key / buyer / Discord / note / hwid" />
+          <button class="btn btn-ghost" id="refreshBtn">Refresh</button>
+          <button class="btn btn-ghost" id="exportBtn">Export JSON</button>
+          <div class="count" id="counts">0 keys</div>
         </div>
-        <div style="overflow:auto">
+
+        <div class="chips" style="margin-bottom:14px">
+          <button class="chip" data-filter="all">All</button>
+          <button class="chip" data-filter="active">Active</button>
+          <button class="chip" data-filter="revoked">Revoked</button>
+          <button class="chip" data-filter="bound">Bound HWID</button>
+          <button class="chip" data-filter="unbound">Unbound</button>
+        </div>
+
+        <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Key</th>
-                <th>Status</th>
-                <th>Discord</th>
-                <th>HWID</th>
-                <th>Last seen</th>
-                <th>Note</th>
-                <th>Actions</th>
+                <th>Status</th><th>Key</th><th>Discord</th><th>Discord ID</th><th>HWID</th><th>Note</th><th>Last seen</th><th>Expires</th><th>Actions</th>
               </tr>
             </thead>
-            <tbody id="tbody"></tbody>
+            <tbody id="keysBody"><tr><td colspan="9" class="muted">Loading…</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -221,205 +111,35 @@
   </div>
 
   <script>
-    const els = {
-      token: document.getElementById('token'),
-      saveToken: document.getElementById('saveToken'),
-      loadKeysBtn: document.getElementById('loadKeysBtn'),
-      refreshBtn: document.getElementById('refreshBtn'),
-      addKeyBtn: document.getElementById('addKeyBtn'),
-      bulkAddBtn: document.getElementById('bulkAddBtn'),
-      exportBtn: document.getElementById('exportBtn'),
-      search: document.getElementById('search'),
-      status: document.getElementById('status'),
-      tbody: document.getElementById('tbody'),
-      stats: document.getElementById('stats'),
-      singleKey: document.getElementById('singleKey'),
-      singleDiscord: document.getElementById('singleDiscord'),
-      singleDiscordId: document.getElementById('singleDiscordId'),
-      singleNote: document.getElementById('singleNote'),
-      bulkKeys: document.getElementById('bulkKeys'),
-      bulkNote: document.getElementById('bulkNote'),
-    };
-
-    let allKeys = [];
-    const savedToken = localStorage.getItem('zzzs_admin_token') || '';
-    if (savedToken) els.token.value = savedToken;
-
-    function setStatus(msg, isError = false) {
-      els.status.textContent = msg;
-      els.status.style.color = isError ? '#f87171' : '#9aa4d1';
+    const $ = (id) => document.getElementById(id);
+    const els = {token:$('adminToken'),saveTokenBtn:$('saveTokenBtn'),globalStatus:$('globalStatus'),addOneBtn:$('addOneBtn'),addOneStatus:$('addOneStatus'),bulkBtn:$('bulkBtn'),bulkStatus:$('bulkStatus'),refreshBtn:$('refreshBtn'),exportBtn:$('exportBtn'),oneKey:$('oneKey'),oneDiscord:$('oneDiscord'),oneDiscordId:$('oneDiscordId'),oneNote:$('oneNote'),bulkKeys:$('bulkKeys'),bulkNote:$('bulkNote'),searchInput:$('searchInput'),keysBody:$('keysBody'),counts:$('counts')};
+    let allKeys = []; let currentFilter = 'all';
+    function setStatus(el,msg,ok=null){el.textContent=msg;el.className='status '+(ok===null?'muted':(ok?'ok':'bad'))}
+    function getToken(){return localStorage.getItem('admin_token')||''}
+    function saveToken(){localStorage.setItem('admin_token',els.token.value.trim());setStatus(els.globalStatus,'Admin token saved.',true);fetchKeys().catch(err=>setStatus(els.globalStatus,err.message||'Failed to load keys.',false))}
+    function authHeaders(json=true){const token=getToken();const headers={'Authorization':'Bearer '+token};if(json) headers['Content-Type']='application/json';return headers}
+    async function parseResponse(res){const text=await res.text();let data=null;try{data=text?JSON.parse(text):null}catch{} if(!res.ok){throw new Error(data?.error||data?.message||`Request failed (${res.status})`)} return data}
+    function fmtTime(ms){if(!ms) return 'Never';const d=new Date(Number(ms));if(Number.isNaN(d.getTime())) return String(ms);return d.toLocaleString()}
+    function fmtRel(ms){if(!ms) return 'Never';const diff=Date.now()-Number(ms);const sec=Math.floor(diff/1000);if(sec<60) return `${sec}s ago`;const min=Math.floor(sec/60);if(min<60) return `${min}m ago`;const hr=Math.floor(min/60);if(hr<24) return `${hr}h ago`;const day=Math.floor(hr/24);return `${day}d ago`}
+    function esc(s){return String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}
+    function filterKeys(list){const q=els.searchInput.value.trim().toLowerCase();return list.filter(k=>{if(currentFilter==='active'&&!k.active)return false;if(currentFilter==='revoked'&&k.active)return false;if(currentFilter==='bound'&&!k.hwid)return false;if(currentFilter==='unbound'&&k.hwid)return false;if(!q)return true;const hay=[k.hash,k.key,k.discord,k.discordId,k.hwid,k.note,k.lastSeen?fmtTime(k.lastSeen):''].join(' ').toLowerCase();return hay.includes(q)})}
+    function render(){const filtered=filterKeys(allKeys);const active=allKeys.filter(k=>k.active).length;const bound=allKeys.filter(k=>k.hwid).length;els.counts.textContent=`${filtered.length}/${allKeys.length} shown • ${active} active • ${bound} bound`; if(!filtered.length){els.keysBody.innerHTML='<tr><td colspan="9" class="muted">No keys found.</td></tr>';return;}
+      els.keysBody.innerHTML=filtered.map(k=>`<tr><td><div class="badge ${k.active?'badge-green':'badge-red'}">${k.active?'Active':'Revoked'}</div>${k.hwid?'<div style="margin-top:6px" class="badge badge-blue">HWID bound</div>':''}</td><td class="mono">${esc(k.key)}</td><td>${esc(k.discord||'')}</td><td class="mono">${esc(k.discordId||'')}</td><td class="mono">${esc(k.hwid||'')}</td><td>${esc(k.note||'')}</td><td title="${esc(fmtTime(k.lastSeen))}">${esc(fmtRel(k.lastSeen))}<div class="small muted">${esc(fmtTime(k.lastSeen))}</div></td><td>${k.expires?esc(fmtTime(k.expires)):'Lifetime'}</td><td><div class="actions">${k.active?`<button class="btn btn-red tiny" data-action="revoke" data-key="${esc(k.key)}">Revoke</button>`:`<button class="btn btn-ghost tiny" disabled>Revoked</button>`}<button class="btn btn-blue tiny" data-action="reset" data-key="${esc(k.key)}">Reset HWID</button><button class="btn btn-ghost tiny" data-action="copy" data-key="${esc(k.key)}">Copy key</button></div></td></tr>`).join('')
     }
-
-    function authHeaders() {
-      const token = els.token.value.trim();
-      return {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      };
-    }
-
-    function fmtDate(ms) {
-      if (!ms) return '<span class="muted">Never</span>';
-      const d = new Date(ms);
-      return `${d.toLocaleString()}<div class="small muted">${relative(ms)}</div>`;
-    }
-
-    function relative(ms) {
-      const diff = Date.now() - ms;
-      const mins = Math.floor(diff / 60000);
-      if (mins < 1) return 'just now';
-      if (mins < 60) return `${mins}m ago`;
-      const hrs = Math.floor(mins / 60);
-      if (hrs < 24) return `${hrs}h ago`;
-      const days = Math.floor(hrs / 24);
-      return `${days}d ago`;
-    }
-
-    function renderStats() {
-      const total = allKeys.length;
-      const active = allKeys.filter(k => k.active).length;
-      const bound = allKeys.filter(k => k.hwid).length;
-      const seen = allKeys.filter(k => k.lastSeen).length;
-      els.stats.innerHTML = [
-        ['Total', total], ['Active', active], ['Bound', bound], ['Seen', seen]
-      ].map(([label, val]) => `<div class="pill"><strong>${val}</strong> ${label}</div>`).join('');
-    }
-
-    function matches(k, q) {
-      if (!q) return true;
-      const hay = [k.key, k.discord, k.note, k.hwid, k.hash].join(' ').toLowerCase();
-      return hay.includes(q.toLowerCase());
-    }
-
-    function renderTable() {
-      const q = els.search.value.trim();
-      const rows = allKeys.filter(k => matches(k, q)).map(k => {
-        const hwid = k.hwid ? `<span class="mono small">${k.hwid}</span>` : '<span class="muted">Unbound</span>';
-        const status = k.active ? '<span class="ok">Active</span>' : '<span class="bad">Revoked</span>';
-        return `
-          <tr>
-            <td>
-              <div class="mono">${k.key}</div>
-              <div class="small muted">${k.hash.slice(0, 16)}...</div>
-            </td>
-            <td>${status}</td>
-            <td>${k.discord || '<span class="muted">None</span>'}</td>
-            <td>${hwid}</td>
-            <td>${fmtDate(k.lastSeen)}</td>
-            <td>${k.note || '<span class="muted">—</span>'}</td>
-            <td>
-              <div class="actions">
-                <button class="orange small-btn" onclick="resetHwid('${k.key}')">Reset HWID</button>
-                <button class="red small-btn" onclick="revokeKey('${k.key}')">Revoke</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }).join('');
-      els.tbody.innerHTML = rows || `<tr><td colspan="7" class="muted">No keys found.</td></tr>`;
-      renderStats();
-    }
-
-    async function api(path, opts = {}) {
-      const res = await fetch(path, {
-        ...opts,
-        headers: { ...authHeaders(), ...(opts.headers || {}) },
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
-      return data;
-    }
-
-    async function loadKeys() {
-      try {
-        setStatus('Loading keys...');
-        const data = await api('/admin/keys');
-        allKeys = data.keys || [];
-        renderTable();
-        setStatus(`Loaded ${allKeys.length} keys.`);
-      } catch (e) {
-        setStatus(e.message, true);
-      }
-    }
-
-    async function addKey() {
-      try {
-        const body = {
-          key: els.singleKey.value.trim() || undefined,
-          discord: els.singleDiscord.value.trim(),
-          discordId: els.singleDiscordId.value.trim(),
-          note: els.singleNote.value.trim(),
-        };
-        const data = await api('/admin/add', { method: 'POST', body: JSON.stringify(body) });
-        setStatus(`Added key: ${data.key}`);
-        els.singleKey.value = '';
-        await loadKeys();
-      } catch (e) {
-        setStatus(e.message, true);
-      }
-    }
-
-    async function bulkAdd() {
-      try {
-        const keys = els.bulkKeys.value.split(/\r?\n/).map(v => v.trim()).filter(Boolean);
-        if (!keys.length) return setStatus('Paste at least one key.', true);
-        const data = await api('/admin/bulk', {
-          method: 'POST',
-          body: JSON.stringify({ keys, note: els.bulkNote.value.trim() })
-        });
-        setStatus(`Bulk added ${data.added} key(s).`);
-        els.bulkKeys.value = '';
-        await loadKeys();
-      } catch (e) {
-        setStatus(e.message, true);
-      }
-    }
-
-    async function revokeKey(key) {
-      if (!confirm(`Revoke ${key}?`)) return;
-      try {
-        await api('/admin/revoke', { method: 'POST', body: JSON.stringify({ key }) });
-        setStatus(`Revoked ${key}`);
-        await loadKeys();
-      } catch (e) {
-        setStatus(e.message, true);
-      }
-    }
-
-    async function resetHwid(key) {
-      if (!confirm(`Reset HWID for ${key}?`)) return;
-      try {
-        await api('/admin/reset-hwid', { method: 'POST', body: JSON.stringify({ key }) });
-        setStatus(`Reset HWID for ${key}`);
-        await loadKeys();
-      } catch (e) {
-        setStatus(e.message, true);
-      }
-    }
-
-    function exportJson() {
-      const blob = new Blob([JSON.stringify(allKeys, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'keys-export.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    window.revokeKey = revokeKey;
-    window.resetHwid = resetHwid;
-
-    els.saveToken.onclick = () => {
-      localStorage.setItem('zzzs_admin_token', els.token.value.trim());
-      setStatus('Token saved in browser.');
-    };
-    els.loadKeysBtn.onclick = loadKeys;
-    els.refreshBtn.onclick = loadKeys;
-    els.addKeyBtn.onclick = addKey;
-    els.bulkAddBtn.onclick = bulkAdd;
-    els.exportBtn.onclick = exportJson;
-    els.search.oninput = renderTable;
+    async function fetchKeys(){setStatus(els.globalStatus,'Loading keys…');const res=await fetch('/admin/keys',{method:'GET',headers:authHeaders(false)});const data=await parseResponse(res);allKeys=Array.isArray(data?.keys)?data.keys:[];render();setStatus(els.globalStatus,'Keys loaded.',true)}
+    async function addOne(){const body={}; const key=els.oneKey.value.trim(); if(key) body.key=key; body.discord=els.oneDiscord.value.trim(); body.discordId=els.oneDiscordId.value.trim(); body.note=els.oneNote.value.trim(); els.addOneBtn.disabled=true; setStatus(els.addOneStatus,'Adding key…');
+      try{const res=await fetch('/admin/add',{method:'POST',headers:authHeaders(true),body:JSON.stringify(body)});const data=await parseResponse(res);setStatus(els.addOneStatus,`Added key: ${data.key}`,true); els.oneKey.value=''; els.oneDiscord.value=''; els.oneDiscordId.value=''; els.oneNote.value=''; await fetchKeys();}catch(err){setStatus(els.addOneStatus,err.message||'Failed to add key.',false)}finally{els.addOneBtn.disabled=false}}
+    async function bulkAdd(){const keys=els.bulkKeys.value.split('\n').map(s=>s.trim()).filter(Boolean); if(!keys.length){setStatus(els.bulkStatus,'Paste at least one key.',false);return;} els.bulkBtn.disabled=true; setStatus(els.bulkStatus,'Bulk adding…');
+      try{const res=await fetch('/admin/bulk',{method:'POST',headers:authHeaders(true),body:JSON.stringify({keys,note:els.bulkNote.value.trim()})});const data=await parseResponse(res);setStatus(els.bulkStatus,`Added ${data.added} key(s).`,true); els.bulkKeys.value=''; els.bulkNote.value=''; await fetchKeys();}catch(err){setStatus(els.bulkStatus,err.message||'Bulk add failed.',false)}finally{els.bulkBtn.disabled=false}}
+    async function revokeKey(key){if(!confirm(`Revoke ${key}?`)) return; try{const res=await fetch('/admin/revoke',{method:'POST',headers:authHeaders(true),body:JSON.stringify({key})});await parseResponse(res); setStatus(els.globalStatus,`Revoked ${key}`,true); await fetchKeys();}catch(err){setStatus(els.globalStatus,err.message||'Failed to revoke key.',false)}}
+    async function resetHwid(key){if(!confirm(`Reset HWID for ${key}?`)) return; try{const res=await fetch('/admin/reset-hwid',{method:'POST',headers:authHeaders(true),body:JSON.stringify({key})});await parseResponse(res); setStatus(els.globalStatus,`Reset HWID for ${key}`,true); await fetchKeys();}catch(err){setStatus(els.globalStatus,err.message||'Failed to reset HWID.',false)}}
+    async function copyKey(key){try{await navigator.clipboard.writeText(key);setStatus(els.globalStatus,`Copied ${key}`,true)}catch{setStatus(els.globalStatus,'Clipboard copy failed.',false)}}
+    function exportJson(){const blob=new Blob([JSON.stringify(allKeys,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='keys-export.json';a.click();URL.revokeObjectURL(url)}
+    els.saveTokenBtn.addEventListener('click',saveToken); els.addOneBtn.addEventListener('click',addOne); els.bulkBtn.addEventListener('click',bulkAdd); els.refreshBtn.addEventListener('click',()=>fetchKeys().catch(err=>setStatus(els.globalStatus,err.message||'Failed to load keys.',false))); els.exportBtn.addEventListener('click',exportJson); els.searchInput.addEventListener('input',render);
+    els.keysBody.addEventListener('click',(e)=>{const btn=e.target.closest('button[data-action]'); if(!btn) return; const {action,key}=btn.dataset; if(action==='revoke') revokeKey(key); if(action==='reset') resetHwid(key); if(action==='copy') copyKey(key)});
+    document.querySelectorAll('.chip').forEach(btn=>btn.addEventListener('click',()=>{currentFilter=btn.dataset.filter; render()}));
+    els.token.value=getToken();
+    if(!getToken()){setStatus(els.globalStatus,'Paste ADMIN_TOKEN and click Save.',false); els.keysBody.innerHTML='<tr><td colspan="9" class="muted">No token saved yet.</td></tr>'} else {fetchKeys().catch(err=>{setStatus(els.globalStatus,err.message||'Failed to load keys.',false); els.keysBody.innerHTML='<tr><td colspan="9" class="bad">Failed to load keys.</td></tr>'})}
   </script>
 </body>
 </html>
