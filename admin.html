@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZZZS Admin Panel</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121933;
+      --panel-2: #0f152b;
+      --border: #273056;
+      --text: #eef2ff;
+      --muted: #9aa4d1;
+      --accent: #7c3aed;
+      --accent-2: #22c55e;
+      --danger: #ef4444;
+      --warn: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Arial, sans-serif;
+      background: linear-gradient(180deg, #090d1a, #0b1020);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    p { color: var(--muted); }
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 980px) {
+      .grid { grid-template-columns: 340px 1fr; }
+    }
+    .card {
+      background: rgba(18, 25, 51, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.25);
+    }
+    .row { display: flex; gap: 10px; align-items: center; }
+    .row.wrap { flex-wrap: wrap; padding: 0; }
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 12px 0 6px;
+    }
+    input, textarea {
+      width: 100%;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 12px 14px;
+      outline: none;
+    }
+    textarea { min-height: 130px; resize: vertical; }
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      color: white;
+      background: var(--accent);
+    }
+    button.secondary { background: #334155; }
+    button.green { background: var(--accent-2); }
+    button.red { background: var(--danger); }
+    button.orange { background: var(--warn); }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { color: var(--muted); font-weight: 600; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .muted { color: var(--muted); }
+    .ok { color: #4ade80; }
+    .bad { color: #f87171; }
+    .search {
+      max-width: 300px;
+      margin-left: auto;
+    }
+    .status {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      min-height: 20px;
+    }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .stats { display: flex; gap: 10px; flex-wrap: wrap; }
+    .small { font-size: 12px; }
+    .danger-note {
+      background: rgba(239, 68, 68, .08);
+      border: 1px solid rgba(239, 68, 68, .35);
+      color: #fca5a5;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topline">
+      <div>
+        <h1>ZZZS Admin Panel</h1>
+        <p>Manage keys without ReqBin. Paste your admin token, then load keys.</p>
+      </div>
+      <div class="stats" id="stats"></div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="pill">Admin token stays in your browser only</div>
+        <label>Admin token</label>
+        <input id="token" type="password" placeholder="Paste ADMIN_TOKEN" />
+
+        <div class="row wrap" style="margin-top:12px">
+          <button id="saveToken">Save token</button>
+          <button class="secondary" id="loadKeysBtn">Load keys</button>
+        </div>
+
+        <div class="danger-note small">
+          Rotate your Discord bot token and admin token if they were ever uploaded or pasted somewhere public.
+        </div>
+
+        <hr style="border-color: var(--border); border-style: solid; margin:18px 0">
+
+        <h3 style="margin:0 0 6px">Generate one key</h3>
+        <label>Key (leave blank to auto-generate)</label>
+        <input id="singleKey" placeholder="ZZZ-XXXX-XXXX-XXXX" />
+        <label>Discord name / buyer tag</label>
+        <input id="singleDiscord" placeholder="toprakvail" />
+        <label>Discord ID</label>
+        <input id="singleDiscordId" placeholder="1234567890" />
+        <label>Note</label>
+        <input id="singleNote" placeholder="buyer note" />
+        <div class="row wrap" style="margin-top:12px">
+          <button class="green" id="addKeyBtn">Add key</button>
+        </div>
+
+        <hr style="border-color: var(--border); border-style: solid; margin:18px 0">
+
+        <h3 style="margin:0 0 6px">Bulk add keys</h3>
+        <label>One key per line</label>
+        <textarea id="bulkKeys" placeholder="ZZZ-AAAA-BBBB-CCCC&#10;ZZZ-DDDD-EEEE-FFFF"></textarea>
+        <label>Shared note</label>
+        <input id="bulkNote" placeholder="campaign / buyer note" />
+        <div class="row wrap" style="margin-top:12px">
+          <button class="orange" id="bulkAddBtn">Bulk add</button>
+        </div>
+
+        <div class="status" id="status"></div>
+      </div>
+
+      <div class="card">
+        <div class="toolbar">
+          <button class="secondary" id="refreshBtn">Refresh</button>
+          <button class="secondary" id="exportBtn">Export JSON</button>
+          <input class="search" id="search" placeholder="Search key / discord / note / hwid" />
+        </div>
+        <div style="overflow:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Status</th>
+                <th>Discord</th>
+                <th>HWID</th>
+                <th>Last seen</th>
+                <th>Note</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const els = {
+      token: document.getElementById('token'),
+      saveToken: document.getElementById('saveToken'),
+      loadKeysBtn: document.getElementById('loadKeysBtn'),
+      refreshBtn: document.getElementById('refreshBtn'),
+      addKeyBtn: document.getElementById('addKeyBtn'),
+      bulkAddBtn: document.getElementById('bulkAddBtn'),
+      exportBtn: document.getElementById('exportBtn'),
+      search: document.getElementById('search'),
+      status: document.getElementById('status'),
+      tbody: document.getElementById('tbody'),
+      stats: document.getElementById('stats'),
+      singleKey: document.getElementById('singleKey'),
+      singleDiscord: document.getElementById('singleDiscord'),
+      singleDiscordId: document.getElementById('singleDiscordId'),
+      singleNote: document.getElementById('singleNote'),
+      bulkKeys: document.getElementById('bulkKeys'),
+      bulkNote: document.getElementById('bulkNote'),
+    };
+
+    let allKeys = [];
+    const savedToken = localStorage.getItem('zzzs_admin_token') || '';
+    if (savedToken) els.token.value = savedToken;
+
+    function setStatus(msg, isError = false) {
+      els.status.textContent = msg;
+      els.status.style.color = isError ? '#f87171' : '#9aa4d1';
+    }
+
+    function authHeaders() {
+      const token = els.token.value.trim();
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      };
+    }
+
+    function fmtDate(ms) {
+      if (!ms) return '<span class="muted">Never</span>';
+      const d = new Date(ms);
+      return `${d.toLocaleString()}<div class="small muted">${relative(ms)}</div>`;
+    }
+
+    function relative(ms) {
+      const diff = Date.now() - ms;
+      const mins = Math.floor(diff / 60000);
+      if (mins < 1) return 'just now';
+      if (mins < 60) return `${mins}m ago`;
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return `${hrs}h ago`;
+      const days = Math.floor(hrs / 24);
+      return `${days}d ago`;
+    }
+
+    function renderStats() {
+      const total = allKeys.length;
+      const active = allKeys.filter(k => k.active).length;
+      const bound = allKeys.filter(k => k.hwid).length;
+      const seen = allKeys.filter(k => k.lastSeen).length;
+      els.stats.innerHTML = [
+        ['Total', total], ['Active', active], ['Bound', bound], ['Seen', seen]
+      ].map(([label, val]) => `<div class="pill"><strong>${val}</strong> ${label}</div>`).join('');
+    }
+
+    function matches(k, q) {
+      if (!q) return true;
+      const hay = [k.key, k.discord, k.note, k.hwid, k.hash].join(' ').toLowerCase();
+      return hay.includes(q.toLowerCase());
+    }
+
+    function renderTable() {
+      const q = els.search.value.trim();
+      const rows = allKeys.filter(k => matches(k, q)).map(k => {
+        const hwid = k.hwid ? `<span class="mono small">${k.hwid}</span>` : '<span class="muted">Unbound</span>';
+        const status = k.active ? '<span class="ok">Active</span>' : '<span class="bad">Revoked</span>';
+        return `
+          <tr>
+            <td>
+              <div class="mono">${k.key}</div>
+              <div class="small muted">${k.hash.slice(0, 16)}...</div>
+            </td>
+            <td>${status}</td>
+            <td>${k.discord || '<span class="muted">None</span>'}</td>
+            <td>${hwid}</td>
+            <td>${fmtDate(k.lastSeen)}</td>
+            <td>${k.note || '<span class="muted">—</span>'}</td>
+            <td>
+              <div class="actions">
+                <button class="orange small-btn" onclick="resetHwid('${k.key}')">Reset HWID</button>
+                <button class="red small-btn" onclick="revokeKey('${k.key}')">Revoke</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+      els.tbody.innerHTML = rows || `<tr><td colspan="7" class="muted">No keys found.</td></tr>`;
+      renderStats();
+    }
+
+    async function api(path, opts = {}) {
+      const res = await fetch(path, {
+        ...opts,
+        headers: { ...authHeaders(), ...(opts.headers || {}) },
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+      return data;
+    }
+
+    async function loadKeys() {
+      try {
+        setStatus('Loading keys...');
+        const data = await api('/admin/keys');
+        allKeys = data.keys || [];
+        renderTable();
+        setStatus(`Loaded ${allKeys.length} keys.`);
+      } catch (e) {
+        setStatus(e.message, true);
+      }
+    }
+
+    async function addKey() {
+      try {
+        const body = {
+          key: els.singleKey.value.trim() || undefined,
+          discord: els.singleDiscord.value.trim(),
+          discordId: els.singleDiscordId.value.trim(),
+          note: els.singleNote.value.trim(),
+        };
+        const data = await api('/admin/add', { method: 'POST', body: JSON.stringify(body) });
+        setStatus(`Added key: ${data.key}`);
+        els.singleKey.value = '';
+        await loadKeys();
+      } catch (e) {
+        setStatus(e.message, true);
+      }
+    }
+
+    async function bulkAdd() {
+      try {
+        const keys = els.bulkKeys.value.split(/\r?\n/).map(v => v.trim()).filter(Boolean);
+        if (!keys.length) return setStatus('Paste at least one key.', true);
+        const data = await api('/admin/bulk', {
+          method: 'POST',
+          body: JSON.stringify({ keys, note: els.bulkNote.value.trim() })
+        });
+        setStatus(`Bulk added ${data.added} key(s).`);
+        els.bulkKeys.value = '';
+        await loadKeys();
+      } catch (e) {
+        setStatus(e.message, true);
+      }
+    }
+
+    async function revokeKey(key) {
+      if (!confirm(`Revoke ${key}?`)) return;
+      try {
+        await api('/admin/revoke', { method: 'POST', body: JSON.stringify({ key }) });
+        setStatus(`Revoked ${key}`);
+        await loadKeys();
+      } catch (e) {
+        setStatus(e.message, true);
+      }
+    }
+
+    async function resetHwid(key) {
+      if (!confirm(`Reset HWID for ${key}?`)) return;
+      try {
+        await api('/admin/reset-hwid', { method: 'POST', body: JSON.stringify({ key }) });
+        setStatus(`Reset HWID for ${key}`);
+        await loadKeys();
+      } catch (e) {
+        setStatus(e.message, true);
+      }
+    }
+
+    function exportJson() {
+      const blob = new Blob([JSON.stringify(allKeys, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'keys-export.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    window.revokeKey = revokeKey;
+    window.resetHwid = resetHwid;
+
+    els.saveToken.onclick = () => {
+      localStorage.setItem('zzzs_admin_token', els.token.value.trim());
+      setStatus('Token saved in browser.');
+    };
+    els.loadKeysBtn.onclick = loadKeys;
+    els.refreshBtn.onclick = loadKeys;
+    els.addKeyBtn.onclick = addKey;
+    els.bulkAddBtn.onclick = bulkAdd;
+    els.exportBtn.onclick = exportJson;
+    els.search.oninput = renderTable;
+  </script>
+</body>
+</html>
